@@ -1,0 +1,8 @@
+body {
+    background-color: lightgray;
+}
+
+@import "/node_modules/bootstrap/dist/css/bootstrap.css";
+
+@import "/node_modules/@fortawesome/fontawesome-free/css/fontawesome.css";
+@import "/node_modules/@fortawesome/fontawesome-free/css/solid.css";

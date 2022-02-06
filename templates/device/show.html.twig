@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Device{% endblock %}
+
+{% block body %}
+    <h1>Device</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ device.id }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ device.description }}</td>
+            </tr>
+            <tr>
+                <th>Brand</th>
+                <td>{{ device.brand }}</td>
+            </tr>
+            <tr>
+                <th>SerialNumber</th>
+                <td>{{ device.serialNumber }}</td>
+            </tr>
+            <tr>
+                <th>DateAdded</th>
+                <td>{{ device.dateAdded ? device.dateAdded|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateBuy</th>
+                <td>{{ device.dateBuy ? device.dateBuy|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Problem</th>
+                <td>{{ device.problem }}</td>
+            </tr>
+            <tr>
+                <th>Diagnosis</th>
+                <td>{{ device.diagnosis }}</td>
+            </tr>
+            <tr>
+                <th>Solution</th>
+                <td>{{ device.solution }}</td>
+            </tr>
+            <tr>
+                <th>QuoteNumber</th>
+                <td>{{ device.quoteNumber }}</td>
+            </tr>
+            <tr>
+                <th>QuoteDate</th>
+                <td>{{ device.quoteDate ? device.quoteDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>QuoteAmount</th>
+                <td>{{ device.quoteAmount }}</td>
+            </tr>
+            <tr>
+                <th>RepairDelay</th>
+                <td>{{ device.repairDelay }}</td>
+            </tr>
+            <tr>
+                <th>RepairDate</th>
+                <td>{{ device.repairDate ? device.repairDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ReturnDate</th>
+                <td>{{ device.returnDate ? device.returnDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>ClientFeedback</th>
+                <td>{{ device.clientFeedback }}</td>
+            </tr>
+            <tr>
+                <th>ClientFeedbackDate</th>
+                <td>{{ device.clientFeedbackDate ? device.clientFeedbackDate|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('device_index') }}">back to list</a>
+
+    <a href="{{ path('device_edit', {'id': device.id}) }}">edit</a>
+
+    {{ include('device/_delete_form.html.twig') }}
+{% endblock %}
