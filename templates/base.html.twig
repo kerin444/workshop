@@ -2,7 +2,10 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="author" content="Fabien LAMAISON">
+        <meta name="generator" content="Fabien LAMAISON - Sporafric">
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -14,6 +17,96 @@
         {% endblock %}
     </head>
     <body>
+    <header class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Navigation">
+        <div class="container-fluid">
+            <a href="{{ path('home') }}" class="navbar-brand">
+                GRSP Maintenance Atelier
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="mainNavClients" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i> Clients</a>
+                        <ul class="dropdown-menu" aria-labelledby="mainNavClients">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('client_index') }}">Liste des clients</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('client_new') }}">Ajouter un client</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="mainNavDevice" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-users"></i> Matériels</a>
+                        <ul class="dropdown-menu" aria-labelledby="mainNavDevice">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('device_index') }}">Liste des matériels</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('client_new') }}">Ajouter un matériel</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Permissions</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="mainNavRoutes" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-route"></i> Routes</a>
+                    <li>
+                        <a class="dropdown-item" href="{$smarty.const.URL_BASE}?module=route&action=list">Liste des routes</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{$smarty.const.URL_BASE}?module=route&action=add">Ajouter une route</a>
+                    </li>
+                </ul>
+                </li>
+                </ul>
+
+                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+                    <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <div class="dropdown dropstart text-end">
+                    {% if app.user %}
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="userProfileMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="userProfileMenu">
+                            <li><a class="dropdown-item" href="#">{{ app.user.email }}</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                        </ul>
+                        {% else %}
+                            <a href="{{ path('app_login') }}" class="d-block text-decoration-none">
+                                Identifiez-vous
+                            </a>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
         {% block body %}{% endblock %}
+    </main>
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+            </a>
+            <span class="text-muted">&copy; 2021 Company, Inc</span>
+        </div>
+
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+            <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+            <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+        </ul>
+    </footer>
+
     </body>
 </html>
