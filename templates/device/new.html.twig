@@ -3,9 +3,73 @@
 {% block title %}New Device{% endblock %}
 
 {% block body %}
+<div class="container pt-3 bg-white">
     <h1>Create new Device</h1>
 
-    {{ include('device/_form.html.twig') }}
+    {{ form_start(form) }}
+
+    {{ form_row(form.client) }}
+    <div id="client_form" data-prototype="{{ form_row(form.client2.vars.prototype)|e('html_attr') }}">
+        <span></span>
+    </div>
+    {{ form_row(form.client2) }}
+
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
 
     <a href="{{ path('device_index') }}">back to list</a>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{  parent() }}
+<script>
+    let collection;
+    let addButton;
+    let span;
+
+    window.addEventListener('load', function(){
+        //const client_select = document.querySelector("#device-client");
+        //const select2 = new TsSelect2(client_select, {  minimumResultsForSearch: Infinity,  width: `250px` });
+
+        collection = document.querySelector("#client_form");
+        span = collection.querySelector("span");
+        addButton = document.createElement("button");
+        addButton.className="btn btn-primary btn-sm add-client";
+        addButton.innerText="Ajouter un nouveau client";
+        let newButton = span.append(addButton);
+
+        collection.dataset.index = collection.querySelectorAll("input").length;
+
+        addButton.addEventListener('click', function(){
+            addClient(collection, newButton);
+        });
+
+        function addClient(collection, newButton){
+            let prototype = collection.dataset.prototype;
+            let index = collection.dataset.index;
+
+            prototype = prototype.replace(/__name__/g, index);
+
+            content = document.createElement('html');
+            content.innerHTML = prototype;
+            let newForm = content.querySelector('div');
+            let deleteButton = document.createElement('button');
+            deleteButton.id="delete-departement-" + index;
+            deleteButton.className="btn btn-danger btn-sm";
+            deleteButton.innerText="Supprimer";
+            newForm.append(deleteButton);
+            collection.dataset.index++;
+
+            let addButton = collection.querySelector(".add-client");
+            span.insertBefore(newForm, addButton);
+            deleteButton.addEventListener('click', function() {
+                this.previousElementSibling.parentElement.remove();
+            })
+        }
+    });
+</script>
+
 {% endblock %}

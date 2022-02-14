@@ -19,6 +19,9 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "@fortawesome/fontawesome-free": "^5.15.4"
+        "@fortawesome/fontawesome-free": "^5.15.4",
+        "popover": "^2.4.1",
+        "ts-select2": "^0.2.0",
+        "yarn": "^1.22.17"
     }
 }

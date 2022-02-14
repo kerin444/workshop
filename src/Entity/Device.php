@@ -66,6 +66,13 @@ class Device
     #[ORM\Column(type: 'date', nullable: true)]
     private $clientFeedbackDate;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    private $createdAt;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'devices')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $createdBy;
+
     public function __construct()
     {
         $this->dateAdded = new DateTime();
@@ -276,6 +283,30 @@ class Device
     public function setClientFeedbackDate(?\DateTimeInterface $clientFeedbackDate): self
     {
         $this->clientFeedbackDate = $clientFeedbackDate;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(?User $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

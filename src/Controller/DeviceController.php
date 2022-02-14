@@ -10,10 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/device')]
 class DeviceController extends AbstractController
 {
+
     #[Route('/', name: 'device_index', methods: ['GET'])]
     public function index(DeviceRepository $deviceRepository): Response
     {
@@ -26,7 +28,12 @@ class DeviceController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $device = new Device();
-        $form = $this->createForm(DeviceType::class, $device);
+        $device->setCreatedAt(new \DateTimeImmutable());
+        $device->setCreatedBy($this->getUser());
+        $options = [
+            'step' => 0
+        ];
+        $form = $this->createForm(DeviceType::class, $device, $options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

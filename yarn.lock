@@ -2077,6 +2077,11 @@
     "es5-ext" "^0.10.50"
     "type" "^1.0.1"
 
+"debounce@~1.0.0":
+  "integrity" "sha1-UDzGdNjX9zcJlmT7dd29NrlibcY="
+  "resolved" "https://registry.npmjs.org/debounce/-/debounce-1.0.2.tgz"
+  "version" "1.0.2"
+
 "debug@^3.1.1":
   "integrity" "sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-3.2.7.tgz"
@@ -2231,6 +2236,11 @@
   dependencies:
     "domelementtype" "^2.2.0"
 
+"domify@~1.4.0":
+  "integrity" "sha512-x18nuiDHMCZGXr4KJSRMf/TWYtiaRo6RX8KN9fEbW54mvbQ6pieUuerC2ahBg+kEp1wycFj8MPUI0WkIOw5E9w=="
+  "resolved" "https://registry.npmjs.org/domify/-/domify-1.4.1.tgz"
+  "version" "1.4.1"
+
 "domutils@^2.5.2", "domutils@^2.8.0":
   "integrity" "sha512-w96Cjofp72M5IIhpjgobBimYEfoPjx1Vx0BSX9P30WBdZW2WIKU0T1Bd0kz2eNZ9ikjKgHbEyKx8BB6H1L3h3A=="
   "resolved" "https://registry.npmjs.org/domutils/-/domutils-2.8.0.tgz"
@@ -2249,6 +2259,11 @@
   "integrity" "sha512-8mec/99xgLUZCIZZq3wt61Tpxg55jnOSpxGYapE/1Ma9MpFEYYaz4QNYm0CM1rrnCo7i3FRHhbaWjeCLsveGjQ=="
   "resolved" "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.64.tgz"
   "version" "1.4.64"
+
+"emitter-component@~1.1.0":
+  "integrity" "sha1-Bl4tvtaVm/RwZ57avq95gdEAOrY="
+  "resolved" "https://registry.npmjs.org/emitter-component/-/emitter-component-1.1.1.tgz"
+  "version" "1.1.1"
 
 "emoji-regex@^8.0.0":
   "integrity" "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A=="
@@ -3537,6 +3552,15 @@
   dependencies:
     "find-up" "^3.0.0"
 
+"popover@^2.4.1":
+  "integrity" "sha1-ruww2WKLk5nr8T4Q+Kr8wVTlep4="
+  "resolved" "https://registry.npmjs.org/popover/-/popover-2.4.1.tgz"
+  "version" "2.4.1"
+  dependencies:
+    "debounce" "~1.0.0"
+    "domify" "~1.4.0"
+    "emitter-component" "~1.1.0"
+
 "portfinder@^1.0.28":
   "integrity" "sha512-Se+2isanIcEqf2XMHjyUKskczxbPH7dQnlMjXX6+dybayyHvAf/TCgyMRlzf/B6QDhAEFOGes0pzRo3by4AbMA=="
   "resolved" "https://registry.npmjs.org/portfinder/-/portfinder-1.0.28.tgz"
@@ -4562,6 +4586,11 @@
   "resolved" "https://registry.npmjs.org/toidentifier/-/toidentifier-1.0.1.tgz"
   "version" "1.0.1"
 
+"ts-select2@^0.2.0":
+  "integrity" "sha512-42OFOui/c87hx/tfivUOmmT++Le2Bc2odxuYvuFiXn4Rz8+p2NF/aTr2kQDCxH+DhAQnnHbaHDwiFhFhu6UW4Q=="
+  "resolved" "https://registry.npmjs.org/ts-select2/-/ts-select2-0.2.0.tgz"
+  "version" "0.2.0"
+
 "type-is@~1.6.18":
   "integrity" "sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g=="
   "resolved" "https://registry.npmjs.org/type-is/-/type-is-1.6.18.tgz"
@@ -4834,6 +4863,11 @@
   "integrity" "sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w=="
   "resolved" "https://registry.npmjs.org/yargs-parser/-/yargs-parser-20.2.9.tgz"
   "version" "20.2.9"
+
+"yarn@^1.22.17":
+  "integrity" "sha512-H0p241BXaH0UN9IeH//RT82tl5PfNraVpSpEoW+ET7lmopNC61eZ+A+IDvU8FM6Go5vx162SncDL8J1ZjRBriQ=="
+  "resolved" "https://registry.npmjs.org/yarn/-/yarn-1.22.17.tgz"
+  "version" "1.22.17"
 
 "yocto-queue@^0.1.0":
   "integrity" "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q=="

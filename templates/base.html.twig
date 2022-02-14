@@ -39,13 +39,24 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" id="mainNavDevice" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-users"></i> Matériels</a>
+                        <a href="#" class="nav-link dropdown-toggle" id="mainNavDevice" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-sd-card"></i> Matériels</a>
                         <ul class="dropdown-menu" aria-labelledby="mainNavDevice">
                             <li>
                                 <a class="dropdown-item" href="{{ path('device_index') }}">Liste des matériels</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="{{ path('client_new') }}">Ajouter un matériel</a>
+                                <a class="dropdown-item" href="{{ path('device_new') }}">Ajouter un matériel</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="mainNavUsers" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-users"></i> Utilisateurs</a>
+                        <ul class="dropdown-menu" aria-labelledby="mainNavUsers">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('user_index') }}">Liste des ustilisateurs</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('user_new') }}">Ajouter un utilisateur</a>
                             </li>
                         </ul>
                     </li>
@@ -71,10 +82,10 @@
                 <div class="dropdown dropstart text-end">
                     {% if app.user %}
                         <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="userProfileMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                            <i class="fas fa-user fa-2x text-white"></i>
                         </a>
                         <ul class="dropdown-menu text-small" aria-labelledby="userProfileMenu">
-                            <li><a class="dropdown-item" href="#">{{ app.user.email }}</a></li>
+                            <li><a class="dropdown-item" href="{{  path("user_show",  {'id': app.user.id}) }}">{{ app.user.email }}</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li><hr class="dropdown-divider"></li>
