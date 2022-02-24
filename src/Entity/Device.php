@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\DeviceRepository;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DeviceRepository::class)]
@@ -14,17 +16,14 @@ class Device
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $description;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $brand;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $serialNumber;
-
-    #[ORM\Column(type: 'datetime')]
-    private $dateAdded;
 
     #[ORM\Column(type: 'date', nullable: true)]
     private $dateBuy;
@@ -73,9 +72,16 @@ class Device
     #[ORM\JoinColumn(nullable: false)]
     private $createdBy;
 
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private $technician;
+
+    #[ORM\OneToMany(mappedBy: 'device', targetEntity: Call::class, cascade: ['persist'], orphanRemoval: true)]
+    private $calls;
+
     public function __construct()
     {
         $this->dateAdded = new DateTime();
+        $this->calls = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -88,7 +94,7 @@ class Device
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -112,21 +118,9 @@ class Device
         return $this->serialNumber;
     }
 
-    public function setSerialNumber(string $serialNumber): self
+    public function setSerialNumber(?string $serialNumber): self
     {
         $this->serialNumber = $serialNumber;
-
-        return $this;
-    }
-
-    public function getDateAdded(): ?\DateTimeInterface
-    {
-        return $this->dateAdded;
-    }
-
-    public function setDateAdded(\DateTimeInterface $dateAdded): self
-    {
-        $this->dateAdded = $dateAdded;
 
         return $this;
     }
@@ -307,6 +301,48 @@ class Device
     public function setCreatedBy(?User $createdBy): self
     {
         $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    public function getTechnician(): ?User
+    {
+        return $this->technician;
+    }
+
+    public function setTechnician(?User $technician): self
+    {
+        $this->technician = $technician;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Call[]
+     */
+    public function getCalls(): Collection
+    {
+        return $this->calls;
+    }
+
+    public function addCall(Call $call): self
+    {
+        if (!$this->calls->contains($call)) {
+            $this->calls[] = $call;
+            $call->setDevice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCall(Call $call): self
+    {
+        if ($this->calls->removeElement($call)) {
+            // set the owning side to null (unless already changed)
+            if ($call->getDevice() === $this) {
+                $call->setDevice(null);
+            }
+        }
 
         return $this;
     }

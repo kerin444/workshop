@@ -12,7 +12,6 @@
                 <th>Description</th>
                 <th>Brand</th>
                 <th>SerialNumber</th>
-                <th>DateAdded</th>
                 <th>DateBuy</th>
                 <th>Problem</th>
                 <th>Diagnosis</th>
@@ -35,7 +34,6 @@
                 <td>{{ device.description }}</td>
                 <td>{{ device.brand }}</td>
                 <td>{{ device.serialNumber }}</td>
-                <td>{{ device.dateAdded ? device.dateAdded|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ device.dateBuy ? device.dateBuy|date('Y-m-d') : '' }}</td>
                 <td>{{ device.problem }}</td>
                 <td>{{ device.diagnosis }}</td>
@@ -50,7 +48,9 @@
                 <td>{{ device.clientFeedbackDate ? device.clientFeedbackDate|date('Y-m-d') : '' }}</td>
                 <td>
                     <a href="{{ path('device_show', {'id': device.id}) }}">show</a>
-                    <a href="{{ path('device_edit', {'id': device.id}) }}">edit</a>
+                    <a href="{{ path('device_edit1', {'id': device.id}) }}">edit1</a>
+                    <a href="{{ path('device_edit2', {'id': device.id}) }}">edit2</a>
+                    <a href="{{ path('device_edit3', {'id': device.id}) }}">edit3</a>
                 </td>
             </tr>
         {% else %}

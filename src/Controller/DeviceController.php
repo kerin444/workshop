@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Device;
+use App\Entity\Client;
+use App\Form\ClientType;
 use App\Form\DeviceType;
 use App\Repository\DeviceRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,6 +26,7 @@ class DeviceController extends AbstractController
         ]);
     }
 
+    //Création d'un nouveau matériel en atelier (saisie du client)
     #[Route('/new', name: 'device_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -33,19 +36,123 @@ class DeviceController extends AbstractController
         $options = [
             'step' => 0
         ];
+
+        $form = $this->createForm(DeviceType::class, $device, $options);
+        $form->handleRequest($request);
+
+        //On vérifie si on doit créer un nouveau client
+        if( !$device->getClient() )
+        {
+            $new_client = new Client();
+            $form2 = $this->createForm(ClientType::class,$new_client);
+            $form2->handleRequest($request);
+            if ($form2->isSubmitted() && $form2->isValid()) {
+                $entityManager->persist($new_client);
+                $entityManager->flush();
+                $device->setClient($new_client);
+            }
+        }
+        if ($form->isSubmitted() && $form->isValid() && $device->getClient() instanceof Client) {
+            $entityManager->persist($device);
+            $entityManager->flush();
+            return $this->redirectToRoute('device_edit1', ['id' => $device->getId()], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('device/new.html.twig', [
+            'device' => $device,
+            'form' => $form,
+            'form2' => $form2
+        ]);
+    }
+
+    //Saisie des informations sur le matériel et la panne
+    #[Route('/{id}/edit1', name: 'device_edit1', methods: ['GET', 'POST'])]
+    public function edit1(Request $request, Device $device, EntityManagerInterface $entityManager): Response
+    {
+        $options = [
+            'step' => 1
+        ];
+
         $form = $this->createForm(DeviceType::class, $device, $options);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($device);
             $entityManager->flush();
-
             return $this->redirectToRoute('device_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('device/new.html.twig', [
+        return $this->renderForm('device/edit1.html.twig', [
             'device' => $device,
-            'form' => $form,
+            'form' => $form
+        ]);
+    }
+
+    //Saisie du diagnostic, de la solution et du devis de réparation
+    #[Route('/{id}/edit2', name: 'device_edit2', methods: ['GET', 'POST'])]
+    public function edit2(Request $request, Device $device, EntityManagerInterface $entityManager): Response
+    {
+        $options = [
+            'step' => 2
+        ];
+
+        $form = $this->createForm(DeviceType::class, $device, $options);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($device);
+            $entityManager->flush();
+            return $this->redirectToRoute('device_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('device/edit2.html.twig', [
+            'device' => $device,
+            'form' => $form
+        ]);
+    }
+
+    //Saisie des relances et du feeback client
+    #[Route('/{id}/edit3', name: 'device_edit3', methods: ['GET', 'POST'])]
+    public function edit3(Request $request, Device $device, EntityManagerInterface $entityManager): Response
+    {
+        $options = [
+            'step' => 3
+        ];
+
+        $form = $this->createForm(DeviceType::class, $device, $options);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($device);
+            $entityManager->flush();
+            return $this->redirectToRoute('device_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('device/edit3.html.twig', [
+            'device' => $device,
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/{id}/edit4', name: 'device_edit4', methods: ['GET', 'POST'])]
+    public function edit4(Request $request, Device $device, EntityManagerInterface $entityManager): Response
+    {
+        $options = [
+            'step' => 4
+        ];
+
+        $form = $this->createForm(DeviceType::class, $device, $options);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($device);
+            $entityManager->flush();
+            return $this->redirectToRoute('device_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('device/edit3.html.twig', [
+            'device' => $device,
+            'form' => $form
         ]);
     }
 

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Call index{% endblock %}
+
+{% block body %}
+    <h1>Call index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Feedback</th>
+                <th>Action</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for call in calls %}
+            <tr>
+                <td>{{ call.id }}</td>
+                <td>{{ call.date ? call.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ call.feedback }}</td>
+                <td>{{ call.action }}</td>
+                <td>
+                    <a href="{{ path('call_show', {'id': call.id}) }}">show</a>
+                    <a href="{{ path('call_edit', {'id': call.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('call_new') }}">Create new</a>
+{% endblock %}

@@ -8,14 +8,21 @@
 
     {{ form_start(form) }}
 
-    {{ form_row(form.client) }}
-    <div id="client_form" data-prototype="{{ form_row(form.client2.vars.prototype)|e('html_attr') }}">
-        <span></span>
+    <div class="mb-3 row">
+        <div class="col-10">
+            {{ form_widget(form.client) }}
+        </div>
+        <div class="col-2">
+            <a class="btn btn-sm btn-success" id="addClient"><i class="fas fa-plus"></i> Ajouter un nouveau client</a>
+        </div>
     </div>
-    {{ form_row(form.client2) }}
+    <div id="client_form">
+        {{ form_widget(form2) }}
+        <button id="cancelNewClient" class="btn btn-sm btn-danger" style="display: none;"><i class="fas fa-ban"></i> Annuler la création du nouveau client</button>
+    </div>
 
 
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-primary">{{ button_label|default('Suivant') }}</button>
     {{ form_end(form) }}
 
 
@@ -29,46 +36,44 @@
     let collection;
     let addButton;
     let span;
+    let newOption;
 
     window.addEventListener('load', function(){
-        //const client_select = document.querySelector("#device-client");
-        //const select2 = new TsSelect2(client_select, {  minimumResultsForSearch: Infinity,  width: `250px` });
-
-        collection = document.querySelector("#client_form");
-        span = collection.querySelector("span");
-        addButton = document.createElement("button");
-        addButton.className="btn btn-primary btn-sm add-client";
-        addButton.innerText="Ajouter un nouveau client";
-        let newButton = span.append(addButton);
-
-        collection.dataset.index = collection.querySelectorAll("input").length;
-
-        addButton.addEventListener('click', function(){
-            addClient(collection, newButton);
+        //TODO => Update with TS-SELECT2 to avoid JQUERY
+        $("#device_client").select2();
+        $("#device_client").change( function(){
+            var option = $("#device_client").find(':selected')[0];
+            if(option.value > 0)
+            {
+                var client = option.label.split(" / ");
+                $("#client_name").val(client[0]).prop("disabled", true);
+                $("#client_contact").val(client[1]).prop("disabled", true);
+                $("#client_phone").val(client[3]).prop("disabled", true);
+                $("#client_email").val(client[2]).prop("disabled", true);
+            }
+            else
+            {
+                $("#client_name").val("").prop("disabled", false);
+                $("#client_contact").val("").prop("disabled", false);
+                $("#client_phone").val("").prop("disabled", false);
+                $("#client_email").val("").prop("disabled", false);
+            }
         });
 
-        function addClient(collection, newButton){
-            let prototype = collection.dataset.prototype;
-            let index = collection.dataset.index;
+        $('#addClient').click( function(e) {
+            e.preventDefault();
+            $("#device_client option[value='-1']").each(function() { $(this).remove(); });
+            newOption = new Option("Nouveau client", '-1', false, true);
+            $("#device_client").append(newOption).prop("disabled", true).trigger('change');
+            $("#cancelNewClient").show();
+        });
 
-            prototype = prototype.replace(/__name__/g, index);
-
-            content = document.createElement('html');
-            content.innerHTML = prototype;
-            let newForm = content.querySelector('div');
-            let deleteButton = document.createElement('button');
-            deleteButton.id="delete-departement-" + index;
-            deleteButton.className="btn btn-danger btn-sm";
-            deleteButton.innerText="Supprimer";
-            newForm.append(deleteButton);
-            collection.dataset.index++;
-
-            let addButton = collection.querySelector(".add-client");
-            span.insertBefore(newForm, addButton);
-            deleteButton.addEventListener('click', function() {
-                this.previousElementSibling.parentElement.remove();
-            })
-        }
+        $("#cancelNewClient").click( function(e){
+            e.preventDefault();
+            $("#device_client option[value='-1']").each(function() { $(this).remove(); });
+            $("#device_client").prop("disabled", false).trigger('change');
+            $("#cancelNewClient").hide();
+        })
     });
 </script>
 

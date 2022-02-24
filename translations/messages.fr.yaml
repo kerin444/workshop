@@ -1,0 +1,28 @@
+Client: Client
+Description: Description
+Brand: Marque
+Serial number: Numéro de série
+Date added: Date d'ajout
+Year: Année
+Month: Mois
+Day: Jour
+Hour: Heure
+Minute: Minute
+Date buy: Date d'achat
+Problem: Problème
+Save: Enregistrer
+Delete: Supprimer
+Diagnosis: Diagnostic
+Solution: Solution
+Quote number: Numéro de devis
+Quote date: Date du devis
+Quote amount: Montant du devis
+Repair delay: Délai de réparation
+Technician: Technicien
+Manager: Manager
+Administrator: Administrateur
+Name: Nom
+Email: E-mail
+Roles: Rôles
+Password: Mot de passe
+Repeat password: Répéter le mot de passe

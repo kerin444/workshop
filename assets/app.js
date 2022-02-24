@@ -10,14 +10,13 @@ import './styles/app.css';
 
 // start the Stimulus application
 
-//import './bootstrap';
+import './bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min'
-import 'ts-select2/dist/ts-select2.min.js'
-import {TsSelect2} from "ts-select2";
-let test = document.createElement('select');
-let test2 = TsSelect2(test)
 
-require('bootstrap/js/dist/popover');
+const $ = require('jquery');
+global.$ = global.jQuery = $;
+import "select2";
+//require('bootstrap/js/dist/popover');
 /*
 $(document).ready(function() {
     var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))

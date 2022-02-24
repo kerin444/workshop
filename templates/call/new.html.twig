@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Call{% endblock %}
+
+{% block body %}
+    <h1>Create new Call</h1>
+
+    {{ include('call/_form.html.twig') }}
+
+    <a href="{{ path('call_index') }}">back to list</a>
+{% endblock %}

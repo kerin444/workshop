@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,30 +18,34 @@ class UserType extends AbstractType
     {
 
         $builder
+            ->add('name', TextType::class,[
+                'required' => true,
+                'attr' => [
+                    "class" => "form-control"
+                ],
+            ])
             ->add('email', EmailType::class,[
                 'required' => true,
                 'attr' => [
                     "class" => "form-control"
                 ],
-                'label' => "Adresse email / Identifiant"
             ])
             ->add('roles', ChoiceType::class, [
                 'choices' => [
-                    'Technicien' => 'ROLE_USER',
+                    'Technician' => 'ROLE_USER',
                     'Manager' => 'ROLE_MANAGER',
-                    'Administrateur' => 'ROLE_ADMIN'
+                    'Administrator' => 'ROLE_ADMIN'
                 ],
                 'expanded' => true,
                 'multiple' => true,
-                'label' => "Rôles"
             ]);
         if($options['data']->getId()==null)
             $builder->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => "Les mots de passes ne sont pas identiques",
                 'required' => true,
-                'first_options' => [ 'label' => "Mot de passe"],
-                'second_options' => [ 'label' => "Répéter le mot de passe"],
+                'first_options' => [ 'label' => "Password"],
+                'second_options' => [ 'label' => "Repeat password"],
             ]);
     }
 

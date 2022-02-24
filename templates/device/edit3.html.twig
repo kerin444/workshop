@@ -1,0 +1,139 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Device{% endblock %}
+
+{% block body %}
+<div class="container pt-3 bg-white">
+    <h1>Edit Device</h1>
+    {{ form_start(form) }}
+    <div class="row-cols-auto" id="device_calls_wrapper" data-prototype="{{ form_widget(form.calls.vars.prototype)|e('html_attr') }}" data-index="{{ form.calls|length }}">
+        <h4><i class="fa fa-phone"></i> Relances téléphoniques </h4>
+            {% for callForm in form.calls %}
+                <div class="alert alert-secondary existing-call position-relative" id="callCard{{ loop.index }}">
+                    <div class="position-absolute top-0 end-0 p-2">
+                        <a href="#" class="link-primary m-1 editCallBtn" data-callcard="callCard{{ loop.index }}"><i class="fas fa-edit"></i></a>
+                        <a href="#" class="link-danger m-1 removeCallBtn" data-callcard="callCard{{ loop.index }}"><i class="fas fa-trash"></i></a>
+                    </div>
+                    <div class="row">
+                        {{ form_errors(callForm) }}
+                        {{ form_row(callForm.technician) }}
+                        {{ form_row(callForm.date) }}
+                        {{ form_row(callForm.feedback) }}
+                        {{ form_row(callForm.action) }}
+                    </div>
+                </div>
+            {% endfor %}
+        <div class="row-cols-auto">
+            <span>
+            <a href="#" class="btn btn-sm btn-primary" id="add_call">
+                <i class="fa fa-plus-circle"></i> Ajouter une relance
+            </a></span>
+        </div>
+    </div>
+    <div class="row">
+        {{ form_row(form.clientFeedback) }}
+        {{ form_row(form.clientFeedbackDate) }}
+        {{ form_row(form.repairDate) }}
+    </div>
+    <button class="btn btn-primary">{{ button_label|default('Save'|trans) }}</button>
+    {{ form_end(form) }}
+    
+    {{ include('device/_delete_form.html.twig') }}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{  parent() }}
+<script>
+    let collection, addCallBtn, span;
+    window.addEventListener('load', function() {
+
+        //Tous les champs des appels existants sont passé en lecture seule
+        document.querySelectorAll('.existing-call')
+            .forEach(function(elmt) {
+                elmt.querySelectorAll('input, textarea, select')
+                    .forEach(function(inpt){
+                        inpt.setAttribute('disabled', true);
+                    });
+            });
+
+        //Réactivation des champs avant l'envoyer le formulaire
+        document.querySelector("form[name='device']").addEventListener("submit", function(e){
+            document.querySelectorAll('.existing-call')
+                .forEach(function(elmt) {
+                    elmt.querySelectorAll('input, textarea, select')
+                        .forEach(function(inpt){
+                            inpt.removeAttribute('disabled');
+                        });
+                });
+
+        });
+
+
+        collection = document.querySelector("#device_calls_wrapper");
+        collection.dataset.index = collection.querySelectorAll("input").length;
+        span = collection.querySelector("span");
+        addCallBtn = document.querySelector("#add_call");
+
+        addCallBtn.addEventListener("click", function(e){
+            e.preventDefault();
+            let prototype = collection.dataset.prototype;
+
+            let index = collection.dataset.index;
+
+            prototype = prototype.replace(/__name__/g, index);
+
+            let content = document.createElement("html");
+            content.innerHTML = prototype;
+            let newForm = content.querySelector("div");
+
+            let removeNewCallBtn = document.createElement("a");
+            removeNewCallBtn.href="#";
+            removeNewCallBtn.className = "link-danger m-1 removeCallBtn";
+            removeNewCallBtn.dataset.callcard = "new_call" + index;
+            removeNewCallBtn.innerHTML = '<i class="fas fa-trash"></i>';
+            removeNewCallBtn.addEventListener("click", function(e){
+                e.preventDefault();
+                console.log("sup");
+                this.parentElement.parentElement.parentElement.remove();
+            });
+
+            let removeNewCallDiv = document.createElement("div");
+            removeNewCallDiv.className = "position-absolute top-0 end-0 p-2";
+            removeNewCallDiv.appendChild(removeNewCallBtn);
+            newForm.prepend(removeNewCallDiv);
+
+            let newCard = document.createElement("div");
+            newCard.className = "alert alert-warning position-relative"
+            newCard.id = "new_call" + index;
+            newCard.appendChild(newForm);
+            span.insertBefore(newCard, addCallBtn);
+            collection.dataset.index++;
+        });
+
+        //Bouton pour éditer l'appel
+        document.querySelectorAll('.editCallBtn')
+            .forEach(function(editBtn) {
+            editBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                const cardId = this.dataset.callcard;
+                document.getElementById(cardId).querySelectorAll('input, textarea, select')
+                    .forEach(function(inpt){
+                        inpt.removeAttribute('disabled');
+                    });
+            });
+        });
+
+        //Bouton pour supprimer un appel
+        document.querySelectorAll('.removeCallBtn')
+            .forEach(function(removeBtn) {
+            removeBtn.addEventListener('click', function(e){
+                e.preventDefault();
+                const cardId = this.dataset.callcard;
+                document.getElementById(cardId).remove();
+            });
+        });
+
+    });
+</script>
+{% endblock %}
